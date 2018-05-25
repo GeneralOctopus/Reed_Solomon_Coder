@@ -2,9 +2,21 @@
 class GaloisField:
     def __init__(self, dec_value, modulus):
         if isinstance(dec_value, int) and isinstance(modulus, int):
-            self.value = dec_value;
-            self.modulus = modulus;
+            if dec_value >= 0 and modulus > 0: 
+                self.value = dec_value % modulus;
+                self.modulus = modulus;
+            else:
+                raise ValueError("Value and modulus have to be greater than zero")
         else:
-            raise ValueError("Value and modulus have to be integers")
+            raise TypeError("Value and modulus have to be integers")
 
+    def __add__(self, other):
+        if isinstance(other, GaloisField):
+            if self.modulus == other.modulus:
+                value = (self.value + other.value) % self.modulus
+                return GaloisField(self.value, self.modulus)
+            else:
+                raise ValueError("Modules are different")
+        else:
+            raise TypeError("Second element is not a valid GaloisField object")
 

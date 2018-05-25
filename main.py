@@ -5,3 +5,4 @@ numberTwo = GaloisField.GaloisField(2,4)
 
 print numberOne.value
 print numberTwo.value
+print (numberOne + numberTwo).value
