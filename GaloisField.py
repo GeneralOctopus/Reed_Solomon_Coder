@@ -11,10 +11,14 @@ class GaloisField:
             raise TypeError("Value and modulus have to be integers")
 
     def __add__(self, other):
+        self.isOperationValid(other)
+        value = (self.value + other.value) % self.modulus
+        return GaloisField(self.value, self.modulus)
+
+    def isOperationValid(self, other):
         if isinstance(other, GaloisField):
             if self.modulus == other.modulus:
-                value = (self.value + other.value) % self.modulus
-                return GaloisField(self.value, self.modulus)
+                pass
             else:
                 raise ValueError("Modules are different")
         else:
