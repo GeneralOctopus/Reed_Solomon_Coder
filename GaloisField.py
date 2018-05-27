@@ -27,6 +27,9 @@ class GaloisField:
         value = self.value * other.value
         return GaloisField(value, self.modulus)
 
+    def __str__(self):
+        return str(self.value) + '%' + str(self.modulus)
+
     def isOperationValid(self, other):
         if isinstance(other, GaloisField):
             if self.modulus == other.modulus:

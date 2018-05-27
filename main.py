@@ -1,9 +1,10 @@
 import GaloisField
 
-numberOne = GaloisField.GaloisField(6,5)
-numberTwo = GaloisField.GaloisField(3,5)
+numberOne = GaloisField.GaloisField(0,5)
+numberTwo = GaloisField.GaloisField(4,5)
 
-print numberOne.value
-print numberTwo.value
-print (numberOne + numberTwo).value
-print (numberOne - numberTwo).value
+print numberOne
+print numberTwo
+print (numberOne + numberTwo)
+print (numberOne - numberTwo)
+print (numberOne * numberTwo)
