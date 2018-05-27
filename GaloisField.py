@@ -18,8 +18,13 @@ class GaloisField:
     def __sub__(self, other):
         self.isOperationValid(other)
         value = self.value - other.value
-        if value < 0:
+        while value < 0:
             value = self.modulus + value
+        return GaloisField(value, self.modulus)
+
+    def __mul__(self, other):
+        self.isOperationValid(other)
+        value = self.value * other.value
         return GaloisField(value, self.modulus)
 
     def isOperationValid(self, other):
