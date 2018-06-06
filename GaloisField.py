@@ -20,6 +20,14 @@ def egcd(x, y):
     return x, a0, b0
 
 
+def coprime(x, y):
+    """Are numbers co prime?
+       condition
+       if GCD(x, y) == 1 numbers are coprime
+    """
+    return gcd(x, y) == 1 
+
+
 class GaloisField:
     def __init__(self, dec_value, modulus):
         if isinstance(dec_value, int) and isinstance(modulus, int):
@@ -42,7 +50,6 @@ class GaloisField:
         return GaloisField(value, self.modulus)
 
     def __invert__(self):
-        """Modular inverse"""
         g, a, _ = egcd(self.value, self.modulus)
         if g == 1:
             return a%self.modulus
@@ -53,7 +60,11 @@ class GaloisField:
     def __str__(self):
         return str(self.value) + '%' + str(self.modulus)
 
+    def __unicode__(self):
+        return str(self.value) + '%' + str(self.modulus)
+
     def isOperationValid(self, other):
+        """Validate operation"""
         if isinstance(other, GaloisField):
             if self.modulus == other.modulus:
                 pass
