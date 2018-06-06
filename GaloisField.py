@@ -5,6 +5,21 @@ def gcd(x, y):
     return x
 
 
+def egcd(x, y):
+    """Extended Euclidean Algorythm - calculate the Gratest Common Divisor of two numbers(x, y)
+       and return coefficients of x and y from equation:
+       ax + by = 1
+    """
+    a0, a1 = 1, 0
+    b0, b1 = 0, 1
+    while y != 0:
+        q = x // y
+        (x, y) = (y, x%y)
+        (a0, a1) = (a1, a0 - q*a1)
+        (b0, b1) = (b1, b0 - q*b1)
+    return x, a0, b0
+
+
 class GaloisField:
     def __init__(self, dec_value, modulus):
         if isinstance(dec_value, int) and isinstance(modulus, int):
