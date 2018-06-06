@@ -41,6 +41,15 @@ class GaloisField:
         value = self.value * other.value
         return GaloisField(value, self.modulus)
 
+    def __invert__(self):
+        """Modular inverse"""
+        g, a, _ = egcd(self.value, self.modulus)
+        if g == 1:
+            return a%self.modulus
+        else:
+            print "Modular inverse does not exist!", self.value, "mod", self.modulus
+            return None
+
     def __str__(self):
         return str(self.value) + '%' + str(self.modulus)
 
