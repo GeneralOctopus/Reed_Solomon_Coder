@@ -1,3 +1,9 @@
+def gcd(x, y):
+    """Euclidean Algorythm - calculate and return the Gratest Common Divisor of two numbers(x, y)"""
+    while y != 0:
+        (x, y) = (y, x%y)
+    return x
+
 
 class GaloisField:
     def __init__(self, dec_value, modulus):
