@@ -28,6 +28,18 @@ def coprime(x, y):
     return gcd(x, y) == 1 
 
 
+def euler_totient(x):
+    """Euler totiem needed for counting number of generators
+    """
+    amount = 0
+    for k in range(1, x + 1):
+        b, _, __ = egcd(x, k)
+        if b == 1:
+            amount += 1
+
+    return amount
+
+
 class GaloisField:
     def __init__(self, dec_value, modulus):
         if isinstance(dec_value, int) and isinstance(modulus, int):
