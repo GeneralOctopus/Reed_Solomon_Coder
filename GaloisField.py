@@ -1,43 +1,21 @@
-def gcd(x, y):
-    """Euclidean Algorythm - calculate and return the Gratest Common Divisor of two numbers(x, y)"""
-    while y != 0:
-        (x, y) = (y, x%y)
-    return x
+from Helper import *
 
+class SimpleGaloisField:
+    def __add__(x, y):
+        return x ^ y
 
-def egcd(x, y):
-    """Extended Euclidean Algorythm - calculate the Gratest Common Divisor of two numbers(x, y)
-       and return coefficients of x and y from equation:
-       ax + by = 1
-    """
-    a0, a1 = 1, 0
-    b0, b1 = 0, 1
-    while y != 0:
-        q = x // y
-        (x, y) = (y, x%y)
-        (a0, a1) = (a1, a0 - q*a1)
-        (b0, b1) = (b1, b0 - q*b1)
-    return x, a0, b0
+    def __sub__(x, y):
+        return x ^ y
 
-
-def coprime(x, y):
-    """Are numbers co prime?
-       condition
-       if GCD(x, y) == 1 numbers are coprime
-    """
-    return gcd(x, y) == 1 
-
-
-def euler_totient(x):
-    """Euler totiem needed for counting number of generators
-    """
-    amount = 0
-    for k in range(1, x + 1):
-        b, _, __ = egcd(x, k)
-        if b == 1:
-            amount += 1
-
-    return amount
+    def __mul__(x, y):
+    """ Carry-less multiplication"""
+        z = 0
+        i = 0
+        while (y >> i) > 0:
+            if y & (1 << i):
+                z ^= x << i
+            i += 1
+        return z
 
 
 class GaloisField:
