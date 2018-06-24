@@ -43,6 +43,10 @@ def carry_less_division(x, y):
 
 class GaloisField:
     def __init__(self, dec_value, modulus):
+        self.gf_exp = [0] * 512
+        self.gf_log = [0] * 256
+        self.init_tables(modulus)
+        
         if isinstance(dec_value, int) and isinstance(modulus, int):
             if dec_value >= 0 and modulus > 0: 
                 self.value = dec_value % modulus;
@@ -51,6 +55,18 @@ class GaloisField:
                 raise ValueError("Value and modulus have to be greater than zero")
         else:
             raise TypeError("Value and modulus have to be integers")
+
+    def init_tables(self, modulus):
+        x = 1
+        for i in range(0, 255):
+            self.gf_exp[i] = x
+            self.gf_log[x] = i
+            x = multiplication_with_modular_reduction(x, 2, modulus)
+
+        for i in range(255, 512):
+            self.gf_exp[i] = self.gf_exp[i - 255]
+
+        return [self.gf_log, self.gf_exp]
 
     def __add__(self, other):
         self.isOperationValid(other)
