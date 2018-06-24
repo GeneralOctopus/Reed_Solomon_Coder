@@ -1,21 +1,44 @@
 from Helper import *
 
-class SimpleGaloisField:
-    def __add__(x, y):
-        return x ^ y
+def add(x, y):
+    return self.value ^ y.value
 
-    def __sub__(x, y):
-        return x ^ y
+def sub(x, y):
+    return self.value ^ y.value
 
-    def __mul__(x, y):
-    """ Carry-less multiplication"""
-        z = 0
-        i = 0
-        while (y >> i) > 0:
-            if y & (1 << i):
-                z ^= x << i
-            i += 1
-        return z
+def bit_len(x):
+    length = 0
+    y = x
+    while y >> length:
+        length += 1
+    return length
+
+def multiplication_with_modular_reduction(x, y, prim = 0):
+    result = carry_less_muliplication(x, y)
+    if prim > 0:
+        result = carry_less_division(result, prim)
+    return result
+
+def carry_less_muliplication(x, y):
+    z = 0
+    i = 0
+    while (y >> i) > 0:
+        if y & (1 << i):
+            z ^= x << i
+        i += 1
+    return z
+
+def carry_less_division(x, y):
+    len1 = bit_len(x)
+    len2 = bit_len(y)
+
+    if len1 < len2:
+        return x
+
+    for i in range(len1 - len2, -1, -1):
+        if x & (1 << i + len2 -1):
+            x ^= y << i
+    return x
 
 
 class GaloisField:
