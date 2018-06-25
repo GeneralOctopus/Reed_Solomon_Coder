@@ -1,10 +1,10 @@
 from Helper import *
 
 def add(x, y):
-    return self.value ^ y.value
+    return x ^ y
 
 def sub(x, y):
-    return self.value ^ y.value
+    return x ^ y
 
 def bit_len(x):
     length = 0
@@ -40,65 +40,61 @@ def carry_less_division(x, y):
             x ^= y << i
     return x
 
-
+#---------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------#
+#---------------------------------------------------------------------------------------------#
 class GaloisField:
-    def __init__(self, dec_value, modulus):
+    def __init__(self, prime=0x11):
         self.gf_exp = [0] * 512
         self.gf_log = [0] * 256
-        self.init_tables(modulus)
+        self.prime = prime
+        self.init_tables()
         
-        if isinstance(dec_value, int) and isinstance(modulus, int):
-            if dec_value >= 0 and modulus > 0: 
-                self.value = dec_value % modulus;
-                self.modulus = modulus;
-            else:
-                raise ValueError("Value and modulus have to be greater than zero")
-        else:
-            raise TypeError("Value and modulus have to be integers")
-
-    def init_tables(self, modulus):
+    def init_tables(self):
         x = 1
         for i in range(0, 255):
             self.gf_exp[i] = x
             self.gf_log[x] = i
-            x = multiplication_with_modular_reduction(x, 2, modulus)
+            x = multiplication_with_modular_reduction(x, 2, self.prime)
 
-        for i in range(255, 512):
+        for i in range(255, 511):
             self.gf_exp[i] = self.gf_exp[i - 255]
 
         return [self.gf_log, self.gf_exp]
 
-    def __add__(self, other):
-        self.isOperationValid(other)
-        value = (self.value + other.value) % self.modulus
-        return GaloisField(value, self.modulus)
+    def add(self, x, y):
+        return add(x, y)
 
-    def __mul__(self, other):
-        self.isOperationValid(other)
-        value = self.value * other.value
-        return GaloisField(value, self.modulus)
+    def sub(self, x, y):
+        return sub(x, y)
 
-    def __invert__(self):
-        g, a, _ = egcd(self.value, self.modulus)
-        if g == 1:
-            return a%self.modulus
-        else:
-            print "Modular inverse does not exist!", self.value, "mod", self.modulus
-            return None
+    def mulWithModularReduction(self, x, y, prime):
+        return multiplication_with_modular_reduction(x, y, prime)
+
+    def multiply(self, x, y):
+        if x == 0 or y == 0:
+            return 0
+
+        return self.gf_exp[self.gf_log[x] + self.gf_log[y]]
+
+    def divide(self, x, y):
+        if x == 0:
+            return 0
+
+        if y == 0:
+            raise ZeroDivisionError()
+
+        return self.gf_exp[(self.gf_log[x] + 255 - self.gf_log[y]) % 255]
+
+    def power(self, x, power):
+        return self.gf_exp[(self.gf_log[x] * power) % 255]
+
+    def inverse(self, x):
+        ''' Inverse == divide(1, x) '''
+        return self.gf_exp[255 - self.gf_log[x]]
 
     def __str__(self):
-        return str(self.value) + '%' + str(self.modulus)
+        return str(self.value) + '%' + str(self.prime)
 
     def __unicode__(self):
-        return str(self.value) + '%' + str(self.modulus)
-
-    def isOperationValid(self, other):
-        """Validate operation"""
-        if isinstance(other, GaloisField):
-            if self.modulus == other.modulus:
-                pass
-            else:
-                raise ValueError("Modules are different")
-        else:
-            raise TypeError("Second element is not a valid GaloisField object")
-
+        return str(self.value) + '%' + str(self.prime)
