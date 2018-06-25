@@ -101,6 +101,13 @@ class GaloisField:
             r[i + len(r) - len(q)] ^= q[i]
         return r
 
+    def polinominal_multiply(self, p, q):
+        r = [0] * (len(p) + len(q) - 1)
+        for i in range(0, len(q)):
+            for j in range(0, len(p)):
+                r[i+j] ^= self.multiply(p[i], q[j])
+            return r
+
     def __str__(self):
         return str(self.value) + '%' + str(self.prime)
 
