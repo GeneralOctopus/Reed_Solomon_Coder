@@ -93,6 +93,14 @@ class GaloisField:
         ''' Inverse == divide(1, x) '''
         return self.gf_exp[255 - self.gf_log[x]]
 
+    def polynominal_add(self, p, q):
+        r = [0] * max(len(p), len(q))
+        for i in range(0, len(p)):
+            r[i + len(r) - len(p)] = p[i]
+        for i in range(0, len(q)):
+            r[i + len(r) - len(q)] ^= q[i]
+        return r
+
     def __str__(self):
         return str(self.value) + '%' + str(self.prime)
 
