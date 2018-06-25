@@ -114,6 +114,17 @@ class GaloisField:
             r[i] = self.multiply(p[i], x)
         return r
 
+    def polynominal_divide(self, p, q):
+        msg_out = list(p)
+        for i in range(0, len(p) - (len(q) - 1)):
+            coef = msg_out[i]
+            if coef != 0:
+                for j in range(1, len(q)):
+                    if divisor[j] != 0:
+                        msg_out[i+j] ^= self.multiply(q[j], coef)
+        separator = -(len(q) - 1)
+        return msg_out[:separator], msg_out[separator:]
+
     def __str__(self):
         return str(self.value) + '%' + str(self.prime)
 
