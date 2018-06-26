@@ -40,15 +40,16 @@ def display_menu():
 def press_any_key():
     raw_input("Press any key to continue...")
 
+def get_number():
+    number = int(raw_input("Write a number "))
+    modulus = int(raw_input("Write a module of the number "))
+    return ModularArithmetic(number, modulus)
+    
 def add():
-    print "First number"
-    number = int(raw_input("Write a number "))
-    modulus = int(raw_input("Write a module of the number "))
-    number1 = ModularArithmetic(number, modulus)
-    print "Second number"
-    number = int(raw_input("Write a number "))
-    modulus = int(raw_input("Write a module of the number "))
-    number2 = ModularArithmetic(number, modulus)
+    print "Set first number"
+    number1 = get_number()
+    print "Set second number"
+    number2 = get_number()
     result = number1 + number2
     print number1, "+", number2, '=', result
     press_any_key()
