@@ -54,12 +54,22 @@ def add():
     print number1, "+", number2, '=', result
     press_any_key()
 
+def multiply():
+    print "Set first number"
+    number1 = get_number()
+    print "Set second number"
+    number2 = get_number()
+    result = number1 * number2
+    print number1, "+", number2, '=', result
+    press_any_key()
+
 def quit():
     display_menu()
     press_any_key()
 
 commands = {
         '+': add,
+        '*': multiply,
         'q': quit
         }
 
