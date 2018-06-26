@@ -12,14 +12,14 @@ class ModularArithmetic:
             raise TypeError("Value and modulus have to be integers")
 
     def __add__(self, other):
-        self.isOperationValid(other)
-        value = (self.value + other.value) % self.modulus
-        return ModularArithmetic(value, self.modulus)
+        if self.isOperationValid(other):
+            value = (self.value + other.value) % self.modulus
+            return ModularArithmetic(value, self.modulus)
 
     def __mul__(self, other):
-        self.isOperationValid(other)
-        value = self.value * other.value
-        return ModularArithmetic(value, self.modulus)
+        if self.isOperationValid(other):
+            value = self.value * other.value
+            return ModularArithmetic(value, self.modulus)
 
     def __invert__(self):
         g, a, _ = egcd(self.value, self.modulus)
@@ -39,7 +39,7 @@ class ModularArithmetic:
         """Validate operation"""
         if isinstance(other, ModularArithmetic):
             if self.modulus == other.modulus:
-                pass
+                return True
             else:
                 raise ValueError("Modules are different")
         else:
