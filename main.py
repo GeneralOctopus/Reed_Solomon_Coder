@@ -27,10 +27,9 @@ from ModularArithmetic import *
 #print numberTwo == 0b00101010
 
 def display_menu():
-    os.system('cls')
+    os.system('clear')
     print "\n"
     print "Modular arithmetic \n"
-    print "\n"
     print "\t [+] Add numbers"
     print "\t [*] Multiply numbers"
     print "\t [~] Inverse number"
@@ -39,12 +38,36 @@ def display_menu():
     print "\t [q] Quit"
 
 def press_any_key():
-    pass
+    raw_input("Press any key to continue...")
 
-numberOne = 0b10001001
-numberTwo = 0b00101010
+def add():
+    print "First number"
+    number = int(raw_input("Write a number "))
+    modulus = int(raw_input("Write a module of the number "))
+    number1 = ModularArithmetic(number, modulus)
+    print "Second number"
+    number = int(raw_input("Write a number "))
+    modulus = int(raw_input("Write a module of the number "))
+    number2 = ModularArithmetic(number, modulus)
+    result = number1 + number2
+    print number1, "+", number2, '=', result
+    press_any_key()
 
-print bin(multiplication_with_modular_reduction(numberOne, numberTwo))
-print bin(multiplication_with_modular_reduction(numberOne, numberTwo, 11))
-print numberOne == 0b10001001
-print numberTwo == 0b00101010
+def quit():
+    display_menu()
+    press_any_key()
+
+commands = {
+        '+': add,
+        'q': quit
+        }
+
+keyboard = ''
+while keyboard != 'q':
+    display_menu()
+    keyboard = str(raw_input("\tWhat would you like to do?\n"))
+    if keyboard in commands:
+        commands[keyboard]()
+    else:
+        print("Command not found")
+        press_any_key()
