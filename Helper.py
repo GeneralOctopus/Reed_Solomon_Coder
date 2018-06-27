@@ -53,7 +53,7 @@ def chinese_remainder_theorem(y, n):
         """
         def calc_next_iteration(base, number_of_items, iterator):
             prod = 1
-            for a in range(number_of_items):
+            for a in range(number_of_items): 
                 prod *= n[a]
             return base + prod * iterator
 
@@ -67,4 +67,4 @@ def chinese_remainder_theorem(y, n):
                 if x % n[i+1] == y[i+1]:
                     val = x
                     break
-return val
+        return val
