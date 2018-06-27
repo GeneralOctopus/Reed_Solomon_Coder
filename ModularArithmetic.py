@@ -24,7 +24,7 @@ class ModularArithmetic:
     def __invert__(self):
         g, a, _ = egcd(self.value, self.modulus)
         if g == 1:
-            return a%self.modulus
+            return ModularArithmetic(a, self.modulus)
         else:
             print "Modular inverse does not exist!", self.value, "mod", self.modulus
             return None
