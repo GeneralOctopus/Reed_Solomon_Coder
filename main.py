@@ -1,5 +1,6 @@
 import os
 
+from Helper import *
 from GaloisField import *
 from ModularArithmetic import *
 
@@ -33,7 +34,6 @@ def display_menu():
     print "\t [+] Add numbers"
     print "\t [*] Multiply numbers"
     print "\t [~] Inverse number"
-    print "\t [P] Primitives"
     print "\t [C] Chinese remainder theorm"
     print "\t [q] Quit"
 
@@ -60,8 +60,22 @@ def multiply():
     print "Set second number"
     number2 = get_number()
     result = number1 * number2
-    print number1, "+", number2, '=', result
+    print number1, "*", number2, '=', result
     press_any_key()
+
+def inverse():
+    print "Set number"
+    number = get_number()
+    result = ~number
+    print "~", number, '=', result
+    press_any_key()
+
+def chinese_theorm():
+    y = [int(x) for x in input("\n\tSpecify the sequence of integers:").split()]
+    n = [int(x) for x in input("\n\tSpecify positive integers that are pairwise co-prime:").split()]
+    result = chinese_remainder_theorem(y, n)
+    print "Result:", result
+    press_any_key() 
 
 def quit():
     display_menu()
@@ -70,6 +84,8 @@ def quit():
 commands = {
         '+': add,
         '*': multiply,
+        '~': inverse,
+        'C': chinese_theorm
         'q': quit
         }
 
